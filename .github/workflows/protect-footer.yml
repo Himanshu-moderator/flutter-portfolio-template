@@ -1,0 +1,22 @@
+name: Protect credit footer
+
+# Fails if the protected credit footer file was changed or removed.
+on:
+  push:
+  pull_request:
+
+jobs:
+  verify-footer:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check footer_section.dart is unchanged
+        run: |
+          expected="$(cat .github/footer.sha256)"
+          actual="$(sha256sum lib/widgets/footer_section.dart | cut -d' ' -f1)"
+          if [ "$expected" != "$actual" ]; then
+            echo "lib/widgets/footer_section.dart was changed. It is a protected credit file (see LICENSE)."
+            exit 1
+          fi
+      - name: Check the footer is still used on the page
+        run: grep -q "FooterSection()" lib/screens/home_page.dart

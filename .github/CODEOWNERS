@@ -1,0 +1,4 @@
+# The credit footer and its guards can only change with the owner's approval.
+/lib/widgets/footer_section.dart   @Himanshu-moderator
+/.github/                          @Himanshu-moderator
+/LICENSE                           @Himanshu-moderator
